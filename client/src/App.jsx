@@ -8,6 +8,7 @@ import AiAgent from './components/AiAgent';
 import Settings from './components/Settings';
 import NewDealModal from './components/NewDealModal';
 import { Loader2 } from 'lucide-react';
+import { getApiUrl } from './config/api';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -25,7 +26,7 @@ export default function App() {
   // Fetch all deals and metrics on load
   const fetchDeals = async () => {
     try {
-      const res = await fetch('/api/deals');
+      const res = await fetch(getApiUrl('/api/deals'));
       if (res.ok) {
         const data = await res.json();
         setDeals(data.deals || []);
@@ -54,7 +55,7 @@ export default function App() {
   const fetchDealDetails = async (id) => {
     if (!id) return;
     try {
-      const res = await fetch(`/api/deals/${id}`);
+      const res = await fetch(getApiUrl(`/api/deals/${id}`));
       if (res.ok) {
         const data = await res.json();
         setSelectedDealData(data);
@@ -74,7 +75,7 @@ export default function App() {
     if (!confirm('Reset Acme Corp demo data to 6 core interactions?')) return;
     setIsLoading(true);
     try {
-      await fetch('/api/seed', { method: 'POST' });
+      await fetch(getApiUrl('/api/seed'), { method: 'POST' });
       await fetchDeals();
       if (selectedDealId) {
         await fetchDealDetails(selectedDealId);

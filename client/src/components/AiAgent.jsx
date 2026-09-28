@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Bot, Send, Sparkles, Building2, User, RefreshCw, AlertTriangle, ShieldCheck, CheckSquare, Swords, Layers, HelpCircle, Loader2 } from 'lucide-react';
 import MarkdownRenderer from './MarkdownRenderer';
+import { getApiUrl } from '../config/api';
 
 export default function AiAgent({ dealData, onNavigate }) {
   const [messages, setMessages] = useState([]);
@@ -21,7 +22,7 @@ export default function AiAgent({ dealData, onNavigate }) {
 
   const fetchChatHistory = async (dealId) => {
     try {
-      const res = await fetch(`/api/deals/${dealId}/chats`);
+      const res = await fetch(getApiUrl(`/api/deals/${dealId}/chats`));
       if (res.ok) {
         const history = await res.json();
         if (history.length > 0) {
@@ -65,7 +66,7 @@ export default function AiAgent({ dealData, onNavigate }) {
     setIsLoading(true);
 
     try {
-      const res = await fetch('/api/agent/chat', {
+      const res = await fetch(getApiUrl('/api/agent/chat'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

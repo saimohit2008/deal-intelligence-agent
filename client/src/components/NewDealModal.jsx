@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Building2, DollarSign, Layers, HeartPulse, FileText, PlusCircle } from 'lucide-react';
+import { getApiUrl } from '../config/api';
 
 export default function NewDealModal({ isOpen, onClose, onDealCreated }) {
   const [name, setName] = useState('');
@@ -18,7 +19,7 @@ export default function NewDealModal({ isOpen, onClose, onDealCreated }) {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch('/api/deals', {
+      const res = await fetch(getApiUrl('/api/deals'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

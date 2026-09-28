@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Sparkles, MessageSquare, Calendar, Building2, Save, CheckCircle2, ArrowRight, Bot, AlertCircle, Loader2 } from 'lucide-react';
+import { getApiUrl } from '../config/api';
 
 export default function AddInteraction({ deals, selectedDealId, onAddInteractionSuccess, onNavigate }) {
   const [dealId, setDealId] = useState(selectedDealId || (deals[0] ? deals[0].id : ''));
@@ -43,7 +44,7 @@ export default function AddInteraction({ deals, selectedDealId, onAddInteraction
     setExtractedResult(null);
 
     try {
-      const res = await fetch(`/api/deals/${dealId}/interactions`, {
+      const res = await fetch(getApiUrl(`/api/deals/${dealId}/interactions`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
